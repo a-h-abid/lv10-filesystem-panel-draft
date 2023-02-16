@@ -1,0 +1,6 @@
+services:
+  app:
+    ports:
+      - ${APP_PUBLISH_PORT}:8080
+    volumes:
+      - ../:/home/app/html

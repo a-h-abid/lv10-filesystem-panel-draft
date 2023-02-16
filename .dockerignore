@@ -1,0 +1,53 @@
+# Git
+.git/
+
+# Composer
+/vendor/
+auth.json
+
+# Laravel
+/bootstrap/cache/*.php
+/database/*.sqlite
+/storage/app/*
+!/storage/app/files
+/storage/app/files/*
+!/storage/app/public
+/storage/app/public/*
+/storage/framework/cache/*
+!/storage/framework/cache/data
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+/.env
+/.env.*
+
+# IDE directories and files
+**/.idea
+**/.vscode
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+**/*.sw*
+**/*.code-workspace
+**/*.sublime-*
+**/.settings/*
+**/nbproject/*
+/.editorconfig
+
+# Cache Files
+.phpunit.result.cache
+.php_cs-fixer.cache
+.php-cs-fixer.cache
+
+# Log files
+*.log*
+
+# Others
+**/.DS_Store
+/*.cache
+/*.md
+.scannerwork/
+prisma-cloud-scan-results*.json

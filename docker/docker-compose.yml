@@ -1,0 +1,49 @@
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
+  minio:
+    driver: local
+
+services:
+  app:
+    image: ${COMPOSE_PROJECT_NAME}_app:latest
+    build:
+      context: ../
+      dockerfile: docker/app/Dockerfile
+      args:
+        - HTTP_PROXY=${APP_HTTP_PROXY}
+        - HTTPS_PROXY=${APP_HTTPS_PROXY}
+        - NO_PROXY=${APP_NO_PROXY}
+        - TIMEZONE=${APP_TIMEZONE}
+        - UID=${UID}
+        - GID=${GID}
+        - "INSTALL_APT_PACKAGES=${INSTALL_APT_PACKAGES}"
+        - "INSTALL_PHP_EXTENSIONS=${INSTALL_PHP_EXTENSIONS}"
+    tty: true
+    networks:
+      - default
+    depends_on:
+      - minio
+
+  minio:
+    image: minio/minio:RELEASE.2023-02-10T18-48-39Z
+    command:
+      - minio
+      - server
+      - /data
+      - --console-address
+      - :${MINIO_CONSOLE_PUBLISH_PORT:-9001}
+    env_file:
+      - .envs/minio.env
+    networks:
+      - default
+    ports:
+      - ${MINIO_CONSOLE_PUBLISH_PORT:-9001}:${MINIO_CONSOLE_PUBLISH_PORT:-9001}
+    volumes:
+      - minio:/data
