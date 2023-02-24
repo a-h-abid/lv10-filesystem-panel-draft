@@ -12,7 +12,7 @@ volumes:
 
 services:
   app:
-    image: ${COMPOSE_PROJECT_NAME}_app:latest
+    image: docker.io/ahabid/lv10-s3-minio-demo:latest
     build:
       context: ../
       dockerfile: docker/app/Dockerfile
@@ -23,8 +23,8 @@ services:
         - TIMEZONE=${APP_TIMEZONE}
         - UID=${UID}
         - GID=${GID}
-        - "INSTALL_APT_PACKAGES=${INSTALL_APT_PACKAGES}"
-        - "INSTALL_PHP_EXTENSIONS=${INSTALL_PHP_EXTENSIONS}"
+        - 'INSTALL_APT_PACKAGES=${INSTALL_APT_PACKAGES}'
+        - 'INSTALL_PHP_EXTENSIONS=${INSTALL_PHP_EXTENSIONS}'
     tty: true
     networks:
       - default
