@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lv10-s3-minio-demo
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: lv10-s3-minio-demo
+  template:
+    metadata:
+      labels:
+        app: lv10-s3-minio-demo
+    spec:
+      initContainers:
+      - name: lv10-s3-minio-demo-migrate
+        image: docker.io/ahabid/lv10-s3-minio-demo:latest
+        envFrom:
+          - configMapRef:
+              name: lv10-s3-minio-demo
+          - secretRef:
+              name: lv10-s3-minio-demo
+        command: ["php", "artisan", "migrate", "--force"]
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+      containers:
+      - name: lv10-s3-minio-demo
+        image: docker.io/ahabid/lv10-s3-minio-demo:latest
+        envFrom:
+          - configMapRef:
+              name: lv10-s3-minio-demo
+          - secretRef:
+              name: lv10-s3-minio-demo
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 8080

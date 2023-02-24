@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lv10-s3-minio-demo
+  namespace: default
+spec:
+  selector:
+    app: lv10-s3-minio-demo
+  ports:
+  - port: 80
+    targetPort: 8080
